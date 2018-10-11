@@ -1,0 +1,105 @@
+a{color: #000000}
+a:visited {color: #000000}
+a:hover {color: blue}
+
+body{
+    background-color: #f8f8f8;
+}
+/*Редактирование формы*/
+.boxes input{
+    width: 200px;
+    height: 14px;
+}
+.boxes input[type="email"]:focus{
+    background-color: aqua;
+    color: darkblue;
+}
+.boxes input[type="text"], textarea{
+    text-transform:capitalize;
+}
+/*Изображения в каталоге*/
+.catalog_img img{
+    border-radius: 5px;
+    border: groove black;
+}
+.catalog_img img:hover{
+    border: groove white;
+}
+.catalog_img {
+    font-weight: bold;
+    text-decoration: none;
+}
+/*Стиль характиристик товара*/
+.charat{
+    color: #000000;
+    font-size: 17px;
+    font-weight: 500;
+    font-family: Calibri, Tahoma, serif;
+    /*list-style: url("wheel-icon-14-16.gif");*/
+    width: 350px;
+    border: 1px solid #000000;
+}
+.charat tr:nth-child(even){
+    background-color: white;
+}
+.charat td{
+    border: 1px solid #000000;
+}
+.charat tr:first-child{
+    text-align: center;
+    height: 50px;
+}
+.header img{
+    width: 80px;
+    height: auto;
+}
+
+
+/*Редактирование заголовков 3его уровня в детальной информации о товаре*/
+.goods h3{
+    color: black;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #eaeaea;
+}
+.goods p:first-letter{
+    color: brown;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+header{
+    display: block;
+}
+
+.long{
+    color:  #484343;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+.menu{
+    font-family: Georgia, Tahoma, serif;
+    font-style: oblique;
+    font-size: 1.2em;
+    list-style-type: none;
+}
+.short{
+    color: #707070;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 16px;
+}
+::placeholder{
+    color: dimgray;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
