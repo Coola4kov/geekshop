@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from geekshop.geekshop.settings import BASE_DIR
+import json
+import os
+
 
 # Create your views here.
 
@@ -11,9 +15,12 @@ def index(request):
 
 
 def catalogue(request):
+    with open(os.path.join(BASE_DIR, 'static', 'json', 'catalogue.json')) as json_data:
+        catalogue_data = json.load(json_data)
     context = {
         'title': 'каталог'
     }
+    context.update(catalogue_data)
     return render(request, 'mainapp/catalogue.html', context)
 
 
@@ -22,3 +29,6 @@ def contacts(request):
         'title': 'контакты'
     }
     return render(request, 'mainapp/contacts.html', context)
+
+
+

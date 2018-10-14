@@ -1,0 +1,25 @@
+{
+  "catalogue":
+  [
+    {
+    "name": "Gold Wheels 6 Black",
+    "price": 1280,
+    "price_old": 1990
+    },
+    {
+    "name": "Gold Wheels 6 Pro Black",
+    "price": 1600,
+    "price_old": 0
+    },
+    {
+    "name": "Gold Wheels 6 Black",
+    "price": 600,
+    "price_old": 1000
+    },
+    {
+    "name": "Gold Wheels 6 Black",
+    "price": 599,
+    "price_old": 600
+    }
+  ]
+}
