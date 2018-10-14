@@ -1,51 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <title>Главная - Cuter on a scooter</title>
-</head>
-<body>
-    <div class="header">
-        <a href="index.html"><img src="/static/img/hover_board.png"/></a>
-        <h1>Cuter on a scooter</h1>
-        Встань на скутер, детка!
-        <hr>
-        <ul class="menu"><strong>Меню</strong><br>
-            <li><a href="{%url 'index' %}">Главная</a></li>
-            <li><a href="{%url 'catalogue' %}">Каталог</a></li>
-            <li><a href="{%url 'contacts' %}">Контакты</a></li>
-        </ul>
-        <hr>
-    </div>
-<h2>Главная</h2>
-    <p>Ты мечтаешь стать ещё моднее, ещё хипстернее, ещё более cuter?
-        <sup><small>симпатичнее</small></sup>
-        <br>
-    </p>
-    <p>
-        Тогда тебе к нам!
-    </p>
-    <p>
-        Только на нашем сайте ты найдёшь самый крутые и убойные гиро- и не только скутеры!<br>
-        Гироскутер – уникальный вид транспорта на небольшие расстояния. Несмотря на свои скромные размеры он<br>
-        действительно дает свободу и независимость от других, более громоздких и требовательных средств передвижения.
-    </p>
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
 
-    <h2>Ты только взгляни на этих крошек</h2>
-    <div class="catalog_img">
-        <img class="catalog_img" src="/static/img/Gold%20Wheels%206%20Black_small.jpg"
-             alt="Gold Wheels 6 Black"
-             title="Gold Wheels 6 Black"
-        />
-        <img class="catalog_img" src="/static/img/Gold%20Wheels%206%20Pro%20Black_small.jpg"
-             alt="Gold Wheels 6 Pro Black"
-             title="Gold Wheels 6 Pro Black"
-        />
+{% block title %}
+    {{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block mainsite %}
+    <div class="bg">
+        <div class="container-fluid standard_page">
+            {% include 'mainapp/include/inc__navigation_menu.html/'%}
+
+            <div class="caption">
+                <span class="border_">CUTER OT THE</span>
+                <br> <br>
+                <span class="border_">SCOOTER</span>
+            </div>
+        </div>
     </div>
 
-
-    <hr>
-    <div class="footer">&copy; 2018 Все права(какие ещё у меня остались), защищены.</div>
-</body>
-</html>
+    <div class="container-fluid standard_page padding_site ">
+        <div class="row justify-content-around" style="margin-top: 10%; margin-bottom: 10%">
+            <div class="col-6 d-flex justify-content-center">
+                <div class="card border border-dark" style="width: 70%">
+                    <img class="card-img-top border-bottom border-dark"
+                         src="{% static 'img/Gold%20Wheels%206%20Pro%20Black.jpg' %}"
+                         alt="Gold Wheels Pro Black">
+                    <div class="card-body">
+                        <h5 class="card-title">Gold Wheels 6 Pro Black <span class="badge badge-primary">New</span></h5>
+                        <p class="card-text">Почуствуй себя настоящим хипстером<br>балансируй с удовольствием.</p>
+                        <a href="#" class="btn btn-primary">Посмотреть поближе</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-center">
+                <div class="card border border-dark" style="width: 70%">
+                    <img class="card-img-top border-bottom border-dark"
+                         src="{% static 'img/HB-1861W.jpg' %}"
+                         alt="HB-1861W">
+                    <div class="card-body ">
+                        <h5 class="card-title">HB-1861W <span class="badge badge-primary">New</span></h5>
+                        <p class="card-text">Новая модель в потярсающем белом цвете <br>приятно удивит вас.</p>
+                        <a href="#" class="btn btn-primary">Посмотреть поближе</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% load staticfiles %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark nav_padding fixed-top">
+    <a class="navbar-brand" href="index.html"><img src="{% static 'img/hover_board.png' %}" width="50" height="50"
+                                                   alt=""></a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'index'%} active {% endif %}"
+               href="{% url 'index' %}">Главная</a>
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'catalogue'%} active {% endif %}"
+               href="{% url 'catalogue' %}">Каталог</a>
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'basket'%} active {% endif %}"
+               href="#">Корзина</a>
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'contacts'%} active {% endif %}"
+               href="#">Контакты</a>
+        </div>
+    </div>
+    <form class="form-inline my-2 my-lg-0">
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                   placeholder="Ищем...">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-secondary btn-number">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <a class="btn btn-success btn-sm ml-3" href="#">
+            <i class="fa fa-shopping-cart"></i> Корзина
+            <span class="badge badge-light">0</span>
+        </a>
+    </form>
+</nav>
+
