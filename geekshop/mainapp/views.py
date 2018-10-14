@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from geekshop.geekshop.settings import BASE_DIR
+from geekshop.settings import BASE_DIR
 import json
 import os
 

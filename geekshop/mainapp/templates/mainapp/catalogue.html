@@ -10,18 +10,19 @@
     <div class="container-fluid standard_page">
         {% include 'mainapp/include/inc__navigation_menu.html/'%}
         <div class="row" style="padding-top: 10%">
+            {% for item in catalogue %}
             <div class="col-md-3">
                 <figure class="card card-product">
                     <div class="img-wrap">
-                        <img src="{% static 'img/Gold Wheels 6 Black.jpg' %}">
+                        <img src="/static/img/{{ item.name }}.jpg">
                     </div>
                     <figcaption class="info-wrap">
-                        <h6 class="title text-dots"><a href="#">Good item name</a></h6>
+                        <h6 class="title text-dots"><a href="#">{{ item.name }}</a></h6>
                         <div class="action-wrap">
                             <a href="#" class="btn btn-primary btn-sm float-right"> Добавить в корзину </a>
                             <div class="price-wrap h5">
-                                <span class="price-new">$1280</span>
-                                <del class="price-old">$1980</del>
+                                <span class="price-new">${{ item.price }}</span>
+                                {% if item.price_old > 0 %}<del class="price-old">${{ item.price_old }}</del>{% endif %}
                             </div>
                             <!-- price-wrap.// -->
                         </div>
@@ -30,64 +31,7 @@
                 </figure>
                 <!-- card // -->
             </div>
-            <!-- col // -->
-            <div class="col-md-3">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="{% static 'img/Gold Wheels 6 Pro Black.jpg' %}">
-                    </div>
-                    <figcaption class="info-wrap">
-                        <h6 class="title text-dots"><a href="#">The name of product</a></h6>
-                        <div class="action-wrap">
-                            <a href="#" class="btn btn-primary btn-sm float-right"> Добавить в корзину </a>
-                            <div class="price-wrap h5">
-                                <span class="price-new">$280</span>
-                            </div>
-                            <!-- price-wrap.// -->
-                        </div>
-                        <!-- action-wrap -->
-                    </figcaption>
-                </figure>
-                <!-- card // -->
-            </div>
-            <!-- col // -->
-            <div class="col-md-3">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="{% static 'img/HB-1861K.jpg' %}">
-                    </div>
-                    <figcaption class="info-wrap">
-                        <h6 class="title text-dots"><a href="#">Name of product</a></h6>
-                        <div class="action-wrap">
-                            <a href="#" class="btn btn-primary btn-sm float-right"> Добавить в корзину </a>
-                            <div class="price-wrap h5">
-                                <span class="price-new">$280</span>
-                            </div>
-                            <!-- price-wrap.// -->
-                        </div>
-                        <!-- action-wrap -->
-                    </figcaption>
-                </figure>
-                <!-- card // -->
-            </div>
-            <!-- col // -->
-            <div class="col-md-3">
-                <figure class="card card-product">
-                    <div class="img-wrap"><img src="{% static 'img/HB-1861W.jpg' %}">
-                    </div>
-                    <figcaption class="info-wrap">
-                        <h6 class="title text-dots"><a href="#">The name of product</a></h6>
-                        <div class="action-wrap">
-                            <a href="#" class="btn btn-primary btn-sm float-right"> Добавить в корзину </a>
-                            <div class="price-wrap h5">
-                                <span class="price-new">$280</span>
-                            </div>
-                            <!-- price-wrap.// -->
-                        </div>
-                        <!-- action-wrap -->
-                    </figcaption>
-                </figure>
-                <!-- card // -->
-            </div>
-            <!-- col // -->
+            {% endfor %}
         </div>
         <!-- row.// -->
 
