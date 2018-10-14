@@ -1,25 +1,24 @@
 {
-  "catalogue":
-  [
+  "catalogue": [
     {
-    "name": "Gold Wheels 6 Black",
-    "price": 1280,
-    "price_old": 1990
+      "name": "Gold Wheels 6 Black",
+      "price": 1280,
+      "price_old": 1990
     },
     {
-    "name": "Gold Wheels 6 Pro Black",
-    "price": 1600,
-    "price_old": 0
+      "name": "Gold Wheels 6 Pro Black",
+      "price": 1600,
+      "price_old": 0
     },
     {
-    "name": "HB-1861K",
-    "price": 600,
-    "price_old": 1000
+      "name": "HB-1861K",
+      "price": 600,
+      "price_old": 1000
     },
     {
-    "name": "HB-1861W",
-    "price": 599,
-    "price_old": 600
+      "name": "HB-1861W",
+      "price": 599,
+      "price_old": 600
     }
   ]
 }

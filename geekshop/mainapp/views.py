@@ -29,6 +29,3 @@ def contacts(request):
         'title': 'контакты'
     }
     return render(request, 'mainapp/contacts.html', context)
-
-
-
