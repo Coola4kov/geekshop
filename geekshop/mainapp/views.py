@@ -15,7 +15,7 @@ def index(request):
 
 
 def catalogue(request):
-    with open(os.path.join(BASE_DIR, 'static', 'json', 'catalogue.json')) as json_data:
+    with open(os.path.join(BASE_DIR, 'json_data', 'catalogue.json')) as json_data:
         catalogue_data = json.load(json_data)
     context = {
         'title': 'каталог'
