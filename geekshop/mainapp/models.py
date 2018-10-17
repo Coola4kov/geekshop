@@ -23,3 +23,4 @@ class Catalogue(models.Model):
 
     def __str__(self):
         return "{} ({})".format(self.name, self.category.name)
+

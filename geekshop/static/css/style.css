@@ -97,11 +97,25 @@ span.border_ {
     text-align: center;
 }
 
+.card-product .img-wrap-2 {
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
+    position: relative;
+    height: 220px;
+    text-align: center;
+}
 .card-product .img-wrap img {
     max-height: 100%;
     max-width: 100%;
     object-fit: cover;
     transition: .3s ease-in-out;
+}
+.card-product .img-wrap-2 img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    transition: .3s ease-in-out;
+    transform: scale(1.4);
 }
 
 .card-product .img-wrap:hover img {

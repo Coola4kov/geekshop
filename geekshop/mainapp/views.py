@@ -1,26 +1,38 @@
 from django.shortcuts import render
-from geekshop.settings import BASE_DIR
-import json
-import os
+from .models import ProductCategory, Catalogue
 
 
-# Create your views here.
+# Выборка только тех категорий, где есть хотя бы один элемент.
+common_data = {
+    "category": ProductCategory.objects.filter(id__in=Catalogue.objects.values('category').distinct())
+}
 
 
 def index(request):
     context = {
         'title': 'магазин'
     }
+    context.update(common_data)
     return render(request, 'mainapp/index.html', context)
 
 
 def catalogue(request):
-    with open(os.path.join(BASE_DIR, 'json_data', 'catalogue.json')) as json_data:
-        catalogue_data = json.load(json_data)
     context = {
-        'title': 'каталог'
+        'title': 'каталог',
+        "catalogue": Catalogue.objects.all(),
+        "new": Catalogue.objects.filter(new_product=True)[:2]
     }
-    context.update(catalogue_data)
+    context.update(common_data)
+    return render(request, 'mainapp/catalogue.html', context)
+
+
+def catalogue_detail(request, category_id=1):
+    context = {
+        'title': 'каталог',
+        "catalogue": Catalogue.objects.filter(category_id=category_id),
+        "new": Catalogue.objects.filter(new_product=True, category_id=category_id)[:2]
+    }
+    context.update(common_data)
     return render(request, 'mainapp/catalogue.html', context)
 
 
