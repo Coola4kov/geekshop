@@ -7,8 +7,21 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link {% if request.resolver_match.url_name == 'index'%} active {% endif %}"
                href="{% url 'index' %}">Главная</a>
-            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'catalogue'%} active {% endif %}"
-               href="{% url 'catalogue' %}">Каталог</a>
+            <!--<a class="nav-item nav-link {% if request.resolver_match.url_name == 'catalogue'%} active {% endif %}"-->
+            <!--href="{% url 'catalogue' %}">Каталог</a>-->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle
+                {% if request.resolver_match.url_name == 'catalogue'%} active {% endif %}"
+                   href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Каталог
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'catalogue' %}">Все категории</a>
+                    <a class="dropdown-item" href="#">Скуутеры</a>
+                    <a class="dropdown-item" href="#">Гироскутеры</a>
+                </div>
+            </li>
             <a class="nav-item nav-link {% if request.resolver_match.url_name == 'basket'%} active {% endif %}"
                href="#">Корзина</a>
             <a class="nav-item nav-link {% if request.resolver_match.url_name == 'contacts'%} active {% endif %}"
