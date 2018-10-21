@@ -12,6 +12,7 @@
             {% csrf_token %}
             {{ auth_form.as_p }}
             <button type="submit" class="btn btn-primary">Авторизоваться</button>
+            <a class="btn btn-primary" href="{% url 'index' %}" role="button">Отмена</a>
         </form>
         <br>
         <a class="btn btn-primary" href="{% url 'auth:reg' %}" role="button">Зарегистрироваться</a>
