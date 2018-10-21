@@ -3,7 +3,6 @@ html {
     height: 100%;
 }
 
-
 .bg {
     /* The image used */
     background-image: url("/static/img/videoblocks-woman-on-city.png");
@@ -30,6 +29,18 @@ html {
     background-size: cover;
 }
 
+.bg-login {
+    /* The image used */
+    background-image: url("/static/img/image_login_page.png");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 .standard_page {
     /*        margin-bottom: 100px;    */
@@ -44,7 +55,15 @@ html {
     left: 0;
     top: 50%;
     width: 100%;
-    /*    height: 30rem;*/
+    text-align: center;
+    color: #000;
+}
+
+.caption2 {
+    position: absolute;
+    left: 0;
+    top: 40%;
+    width: 100%;
     text-align: center;
     color: #000;
 }
@@ -56,8 +75,6 @@ span.border_ {
     font-size: 25px;
     letter-spacing: 10px;
 }
-
-
 
 .second_part {
     background-color: #FCFACE;
@@ -71,7 +88,6 @@ span.border_ {
     padding-left: 7%;
     padding-right: 7%;
 }
-
 
 .card-product:after {
     content: "";
@@ -104,12 +120,14 @@ span.border_ {
     height: 220px;
     text-align: center;
 }
+
 .card-product .img-wrap img {
     max-height: 100%;
     max-width: 100%;
     object-fit: cover;
     transition: .3s ease-in-out;
 }
+
 .card-product .img-wrap-2 img {
     max-height: 100%;
     max-width: 100%;
@@ -119,7 +137,7 @@ span.border_ {
 }
 
 .card-product .img-wrap:hover img {
-	transform: scale(1.4);
+    transform: scale(1.4);
 }
 
 .card-product .info-wrap {
@@ -142,3 +160,28 @@ span.border_ {
     margin-top: 0;
 }
 
+.authentication_form {
+display: flex;
+    /*align-items: center;*/
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.authentication_form label{
+    color: white;
+    margin-bottom: .3rem;
+}
+
+.authentication_form li{
+    list-style-type: none;
+    color: navajowhite;
+}
+.authentication_form ul{
+    margin-bottom: 0.4rem;
+}
+
+.authentication_form input{
+    width: 80%;
+    height: calc(2.2rem + 2px)
+}

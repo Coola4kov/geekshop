@@ -1,24 +1,72 @@
+[{
+"category": "\u0413\u0438\u0440\u043e\u0441\u043a\u0443\u0442\u0435\u0440\u044b",
+"name": "HB-1861K",
+"image": "products_images/HB-1861K.jpg",
+"short_desc": "",
+"description": "",
+"price": "600.00",
+"old_price": "1000.00",
+"sale": 0,
+"new_product": true,
+"storage": 10
+},
 {
-  "catalogue": [
-    {
-      "name": "Gold Wheels 6 Black",
-      "price": 1280,
-      "price_old": 1990
-    },
-    {
-      "name": "Gold Wheels 6 Pro Black",
-      "price": 1600,
-      "price_old": 0
-    },
-    {
-      "name": "HB-1861K",
-      "price": 600,
-      "price_old": 1000
-    },
-    {
-      "name": "HB-1861W",
-      "price": 599,
-      "price_old": 600
-    }
-  ]
-}
+"category": "\u0413\u0438\u0440\u043e\u0441\u043a\u0443\u0442\u0435\u0440\u044b",
+"name": "Gold Wheels 6 Black",
+"image": "products_images/Gold_Wheels_6_Black.jpg",
+"short_desc": "",
+"description": "",
+"price": "1280.00",
+"old_price": "1990.00",
+"sale": 0,
+"new_product": true,
+"storage": 3
+},
+{
+"category": "\u0413\u0438\u0440\u043e\u0441\u043a\u0443\u0442\u0435\u0440\u044b",
+"name": "Gold Wheels 6 Pro Black",
+"image": "products_images/Gold_Wheels_6_Pro_Black.jpg",
+"short_desc": "",
+"description": "",
+"price": "1600.00",
+"old_price": "0.00",
+"sale": 0,
+"new_product": false,
+"storage": 18
+},
+{
+"category": "\u0413\u0438\u0440\u043e\u0441\u043a\u0443\u0442\u0435\u0440\u044b",
+"name": "HB-1861W",
+"image": "products_images/HB-1861W.jpg",
+"short_desc": "",
+"description": "",
+"price": "599.00",
+"old_price": "600.00",
+"sale": 0,
+"new_product": true,
+"storage": 5
+},
+{
+"category": "\u0413\u0438\u0440\u043e\u0441\u043a\u0443\u0442\u0435\u0440\u044b",
+"name": "iconBIT Smart Scooter S",
+"image": "products_images/iconBIT_Smart_Scooter_S_SD-0019K.jpg",
+"short_desc": "",
+"description": "",
+"price": "500.00",
+"old_price": "650.00",
+"sale": 0,
+"new_product": false,
+"storage": 3
+},
+{
+"category": "\u0421\u0435\u0433\u0432\u0435\u0439",
+"name": "Ninebot by Segway miniPRO",
+"image": "products_images/Ninebot_by_Segway_miniPRO_320_Black.jpg",
+"short_desc": "",
+"description": "",
+"price": "1399.00",
+"old_price": "0.00",
+"sale": 0,
+"new_product": false,
+"storage": 16
+}]

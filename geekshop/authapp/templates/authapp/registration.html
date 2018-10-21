@@ -1,0 +1,19 @@
+{% extends 'authapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+{{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block userform %}
+
+    <div class="authentication_form col-lg-5 bg-dark">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ reg_form.as_p }}
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            <a class="btn btn-primary" href="{% url 'auth:auth' %}" role="button">Назад</a>
+        </form>
+    </div>
+
+{% endblock %}
