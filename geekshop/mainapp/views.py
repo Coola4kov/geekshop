@@ -32,6 +32,7 @@ def index(request):
 def catalogue(request):
     context = {
         'title': 'каталог',
+        "catalogue": Catalogue.objects.all(),
         "new": Catalogue.objects.filter(new_product=True)[:2],
     }
     context.update(count_items(request))

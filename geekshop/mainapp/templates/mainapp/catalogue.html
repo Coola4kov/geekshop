@@ -23,9 +23,9 @@
                             <a href="{% url 'basket:add' item.pk %}" class="btn btn-primary btn-sm float-right">
                                 Добавить в корзину </a>
                             <div class="price-wrap h5">
-                                <span class="price-new">${{ item.price|floatformat:0 }}</span>
+                                <span class="price-new">{{ item.price|floatformat:0 }} ₽</span>
                                 {% if item.old_price > 0 %}
-                                <del class="price-old">${{ item.old_price|floatformat:0 }}</del>
+                                <del class="price-old">{{ item.old_price|floatformat:0 }} ₽</del>
                                 {% endif %}
                             </div>
                             <!-- price-wrap.// -->
@@ -47,7 +47,6 @@
     </div>
 </div>
 <div class="container-fluid standard_page">
-    {% include 'mainapp/include/inc__navigation_menu.html/'%}
     <div class="row card-deck" style="padding-top: 5%; padding-bottom: 5%">
         {% for item in catalogue %}
         <div class="col-md-4">
@@ -61,9 +60,9 @@
                     <div class="action-wrap">
                         <a href="{% url 'basket:add' item.pk %}" class="btn btn-primary btn-sm float-right"> Добавить в корзину </a>
                         <div class="price-wrap h5">
-                            <span class="price-new">${{ item.price|floatformat:0 }}</span>
+                            <span class="price-new">{{ item.price|floatformat:0 }} ₽</span>
                             {% if item.old_price > 0 %}
-                            <del class="price-old">${{ item.old_price|floatformat:0 }}</del>
+                            <del class="price-old">{{ item.old_price|floatformat:0 }} ₽</del>
                             {% endif %}
                         </div>
                         <!-- price-wrap.// -->
