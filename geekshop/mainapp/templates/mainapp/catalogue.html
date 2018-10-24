@@ -14,15 +14,14 @@
             <div class="col-md-6">
                 <figure class="card card-product">
                     <div class="img-wrap-2">
-                        <!--<img src="/media/{{ item.image }}">-->
-
                         <img src="/media/{{ item.image }}">
                     </div>
                     <figcaption class="info-wrap">
                         <h6 class="title text-dots"><a href="#">{{ item.name }}</a> <span
                                 class="badge badge-primary">New</span></h6>
                         <div class="action-wrap">
-                            <a href="#" class="btn btn-primary btn-sm float-right"> Добавить в корзину </a>
+                            <a href="{% url 'basket:add' item.pk %}" class="btn btn-primary btn-sm float-right">
+                                Добавить в корзину </a>
                             <div class="price-wrap h5">
                                 <span class="price-new">${{ item.price|floatformat:0 }}</span>
                                 {% if item.old_price > 0 %}
@@ -60,7 +59,7 @@
                     <h6 class="title text-dots"><a href="#">{{ item.name }}</a>{% if item.new_product %} <span
                             class="badge badge-primary">New</span>{% endif %}</h6>
                     <div class="action-wrap">
-                        <a href="#" class="btn btn-primary btn-sm float-right"> Добавить в корзину </a>
+                        <a href="{% url 'basket:add' item.pk %}" class="btn btn-primary btn-sm float-right"> Добавить в корзину </a>
                         <div class="price-wrap h5">
                             <span class="price-new">${{ item.price|floatformat:0 }}</span>
                             {% if item.old_price > 0 %}

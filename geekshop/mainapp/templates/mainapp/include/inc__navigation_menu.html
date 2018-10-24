@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark nav_padding fixed-top">
-    <a class="navbar-brand" href="index.html"><img src="{% static 'img/hover_board.png' %}" width="50" height="50"
+    <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/hover_board.png' %}" width="50" height="50"
                                                    alt=""></a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
@@ -47,7 +47,7 @@
         </div>
         <a class="btn btn-success btn-sm ml-3" href="{% url 'basket:main' %}">
             <i class="fa fa-shopping-cart"></i> Корзина
-            <span class="badge badge-light">0</span>
+            <span class="badge badge-light">{{ total }}</span>
         </a>
         {% if user.is_authenticated %}
             <a class="btn btn-danger btn-sm ml-3" href="{% url 'auth:logout' %}">
@@ -58,6 +58,7 @@
                 <i class="fa fa-sign-in"></i> Войти
             </a>
         {% endif %}
+
     </form>
 </nav>
 
