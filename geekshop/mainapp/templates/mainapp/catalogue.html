@@ -9,13 +9,13 @@
 <div class="bg-2">
     <div class="container-fluid standard_page">
         {% include 'mainapp/include/inc__navigation_menu.html/'%}
-
-        {{ request.resolver_match }}
         <div class="row card-deck" style="padding-top: 10%; padding-left: 20%; padding-right: 20%">
             {% for item in new %}
             <div class="col-md-6">
                 <figure class="card card-product">
                     <div class="img-wrap-2">
+                        <!--<img src="/media/{{ item.image }}">-->
+
                         <img src="/media/{{ item.image }}">
                     </div>
                     <figcaption class="info-wrap">

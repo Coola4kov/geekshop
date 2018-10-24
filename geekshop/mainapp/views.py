@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404
 from .models import ProductCategory, Catalogue
 
 
@@ -27,9 +27,12 @@ def catalogue(request):
 
 
 def catalogue_detail(request, category_id=1):
+
+    catalogue_objects = get_list_or_404(Catalogue, category_id=category_id)
+    print(catalogue_objects)
     context = {
         'title': 'каталог',
-        "catalogue": Catalogue.objects.filter(category_id=category_id),
+        "catalogue": catalogue_objects,
         "new": Catalogue.objects.filter(new_product=True, category_id=category_id)[:2]
     }
     context.update(common_data)
