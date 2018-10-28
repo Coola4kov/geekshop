@@ -1,0 +1,97 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+{{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block mainsite %}
+{% include 'mainapp/include/inc__navigation_menu.html/'%}
+<br>
+<br>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">{{ product.name }}</h1>
+        <p class="lead text-muted mb-0">{{ product.short_desc }}</p>
+    </div>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'catalogue:catalogue' %}">Каталог</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}
+                        {% if product.new_product %}
+                        <span class="badge badge-primary">
+                            New
+                        </span>
+                        {% endif %}
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <!-- Image -->
+        <div class="col-12 col-lg-6">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <a href="/media/{{ product.image }}" target="_blank">
+                        <img class="img-fluid" src="/media/{{ product.image }}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add to cart -->
+        <div class="col-12 col-lg-6 add_to_cart_block">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <p class="price">{{ product.price }} Руб</p>
+                    {% if product.old_price > 0 %}
+                    <p class="price_discounted">
+                        {{ product.old_price }} Руб
+                    </p>
+                    {% endif %}
+
+                    <a href="{% url 'basket:add' product.pk %}" class="btn btn-success btn-lg btn-block text-uppercase">
+                        <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                    </a>
+                    </form>
+                    <div class="product_rassurance">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Быстрая доставка</li>
+                            <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>Безопасный платёж
+                            </li>
+                            <li class="list-inline-item"><i class="fa fa-phone fa-2x"></i><br/>+7 800 55 99 66</li>
+                        </ul>
+                    </div>
+                    <div class="datasheet p-3 mb-2 bg-info text-white">
+                        <a href="" class="text-white"><i class="fa fa-file-text"></i> Скачать инструкцию</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Description -->
+        <div class="col-12">
+            <div class="card border-light mb-3">
+                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-align-justify"></i>
+                    Описание
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        {{ product.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

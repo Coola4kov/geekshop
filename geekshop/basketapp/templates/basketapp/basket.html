@@ -34,16 +34,16 @@
                     <tbody>
                     {% for item in cart %}
                     <tr>
-                        <td><img class="border border-info" style="height: 50px" src="/media/{{ item.product.image }}"/></td>
+                        <td><img class="border border-info" style="height: 50px" src="/media/{{ item.product.image }}"/>
+                        </td>
                         <td>{{ item.product.name }}</td>
                         <td>В наличии</td>
-                        <!--<td><input class="form-control" type="text" value="1"/></td>-->
                         <td class="text-center">{{ item.quantity }}</td>
-                        <td class="text-right">{% multiply item.product.price item.quantity %} ₽</td>
+                        <td class="text-right">{% multiply item.product.price item.quantity %} Руб</td>
                         <td class="text-right">
-                            <button type="button" class="btn btn-sm btn-danger">
+                            <a href="{% url 'basket:remove' item.product.id %}" class="btn btn-sm btn-danger">
                                 <i class="fa fa-trash-o"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -52,8 +52,9 @@
                         <!--<td></td>-->
                         <!--<td></td>-->
                         <!--<td></td>-->
-                        <!--<td>Цена товаров</td>-->
-                        <!--<td class="text-right">255,90 ₽</td>-->
+                        <!--<td>Цена товаров без скидки</td>-->
+                        <!--<td class="text-right">{% if cart %} {{ cart.0.total_old_price }} {% else %} 0 {% endif %} Руб-->
+                        <!--</td>-->
                     <!--</tr>-->
                     <tr>
                         <td></td>
@@ -61,7 +62,8 @@
                         <td></td>
                         <td></td>
                         <td><strong>Всего</strong></td>
-                        <td class="text-right"><strong>{{ total_price }} ₽</strong></td>
+                        <td class="text-right"><strong>{% if cart %} {{ cart.0.total_price }} {% else %} 0 {% endif %}
+                            Руб</strong></td>
                     </tr>
                     </tbody>
                 </table>

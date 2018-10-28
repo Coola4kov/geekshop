@@ -9,4 +9,24 @@ class Basket(models.Model):
     quantity = models.PositiveIntegerField(verbose_name='количество', default=0)
     add_datetime = models.DateTimeField(verbose_name='время', auto_now_add=True)
 
+    def _get_total_quantity(self):
+        _items = Basket.objects.filter(user=self.user)
+        return sum(list(map(lambda x: x.quantity, _items)))
 
+    def _get_total_price(self, old=False):
+        _items = Basket.objects.filter(user=self.user)
+        if old:
+            _total_price = sum(list(map(lambda x: x.product.old_price * x.quantity, _items)))
+        else:
+            _total_price = sum(list(map(lambda x: x.product.price * x.quantity, _items)))
+        return _total_price
+
+    def _get_total_old_price(self):
+        temp = self._get_total_price(old=True)
+        if not temp:
+            temp = self._get_total_price()
+        return temp
+
+    total_quantity = property(_get_total_quantity)
+    total_price = property(_get_total_price)
+    total_old_price = property(_get_total_old_price)
