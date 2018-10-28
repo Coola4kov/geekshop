@@ -5,19 +5,22 @@ from authapp.forms import ShopUserAuthForm, ShopUserCreationForm
 
 def auth(request):
     auth_form = ShopUserAuthForm(data=request.POST or None)
-
+    next_ = request.GET['next'] if 'next' in request.GET.keys() else ""
     if request.method == "POST" and auth_form.is_valid():
-
         username = request.POST['username']
         pswd = request.POST['password']
         user = authenticate(username=username, password=pswd)
-        if user is not None:
+        if user is not None and user.is_active:
             login(request, user)
-            return redirect('index')
+            if 'next' in request.POST.keys():
+                return redirect(request.POST['next'])
+            else:
+                return redirect('index')
 
     context = {
         'title': "авторизация",
-        'auth_form': auth_form
+        'auth_form': auth_form,
+        'next': next_
     }
     return render(request, 'authapp/auth.html', context)
 

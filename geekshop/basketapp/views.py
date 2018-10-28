@@ -1,4 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+
 from mainapp.models import ProductCategory, Catalogue
 from .models import Basket
 
@@ -15,6 +18,7 @@ def get_cart(request):
     return common_data
 
 
+@login_required
 def basket(request):
     context = {
         'title': 'корзина'
@@ -23,7 +27,7 @@ def basket(request):
     return render(request, 'basketapp/basket.html', context)
 
 
-def _basket_change(request, product_id, remove=False):
+def _basket_change(request, product_id, remove=False, ):
     product = get_object_or_404(Catalogue, pk=product_id)
     if request.user.is_authenticated:
         current_item = Basket.objects.filter(user=request.user, product=product)
@@ -37,12 +41,17 @@ def _basket_change(request, product_id, remove=False):
                 new_item.save()
         else:
             current_item.delete()
+
     return redirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required
 def basket_add(request, product_id):
+    if 'auth' in request.META.get('HTTP_REFERER'):
+        return redirect(reverse('catalogue:product_detail', args=[product_id]))
     return _basket_change(request, product_id)
 
 
+@login_required
 def basket_remove(request, product_id):
     return _basket_change(request, product_id, remove=True)

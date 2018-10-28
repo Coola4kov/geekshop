@@ -7,15 +7,19 @@
 
 {% block userform %}
 
-    <div class="authentication_form col-md-3 bg-dark ">
-        <form method="post">
-            {% csrf_token %}
-            {{ auth_form.as_p }}
-            <button type="submit" class="btn btn-primary">Авторизоваться</button>
-            <a class="btn btn-primary" href="{% url 'index' %}" role="button">Отмена</a>
-        </form>
-        <br>
-        <a class="btn btn-primary" href="{% url 'auth:reg' %}" role="button">Зарегистрироваться</a>
-    </div>
+<div class="authentication_form col-md-3 bg-dark ">
+    <form method="post">
+        {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+
+        {{ auth_form.as_p }}
+        <button type="submit" class="btn btn-primary">Авторизоваться</button>
+        <a class="btn btn-primary" href="{% url 'index' %}" role="button">Отмена</a>
+    </form>
+    <br>
+    <a class="btn btn-primary" href="{% url 'auth:reg' %}" role="button">Зарегистрироваться</a>
+</div>
 
 {% endblock %}
