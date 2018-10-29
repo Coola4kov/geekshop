@@ -2,6 +2,8 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import ProductCategory, Catalogue
 from basketapp.views import Basket
 
+import random
+
 # Выборка только тех категорий, где есть хотя бы один элемент.
 common_data = {
     "category": ProductCategory.objects.filter(id__in=Catalogue.objects.values('category').distinct()),
@@ -25,10 +27,15 @@ def index(request):
 
 
 def catalogue(request):
+    new_prod = Catalogue.objects.filter(new_product=True)
+    if len(new_prod) < 2:
+        new = []
+    else:
+        new = random.sample(list(new_prod), 2)
     context = {
         'title': 'каталог',
         "catalogue": Catalogue.objects.all(),
-        "new": Catalogue.objects.filter(new_product=True)[:2],
+        "new": new,
     }
     context.update(get_cart(request))
     return render(request, 'mainapp/catalogue.html', context)
@@ -36,11 +43,15 @@ def catalogue(request):
 
 def catalogue_detail(request, category_id=1):
     catalogue_objects = get_list_or_404(Catalogue, category_id=category_id)
-    print(catalogue_objects)
+    new_prod = Catalogue.objects.filter(new_product=True, category_id=category_id)
+    if len(new_prod) < 2:
+        new = []
+    else:
+        new = random.sample(list(new_prod), 2)
     context = {
         'title': 'каталог',
         "catalogue": catalogue_objects,
-        "new": Catalogue.objects.filter(new_product=True, category_id=category_id)[:2]
+        "new": new,
     }
     context.update(common_data)
     return render(request, 'mainapp/catalogue.html', context)
