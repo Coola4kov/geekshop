@@ -1,0 +1,55 @@
+{% load staticfiles %}
+{% load mult %}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Товар</th>
+            <th scope="col">Наличие</th>
+            <th scope="col" class="text-center">Количество</th>
+            <th scope="col" class="text-right">Цена</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart %}
+        <tr class="basket_rows">
+            <td><img class="border border-info" style="height: 50px" src="/media/{{ item.product.image }}"/>
+            </td>
+            <td>{{ item.product.name }}</td>
+            <td>В наличии</td>
+            <td><input class="form-control" name="{{ item.product.id }}" type="number" min="1"
+                       value="{{ item.quantity }}"></td>
+            <!--<td class="text-center">{{ item.quantity }}</td>-->
+            <td class="text-right">{% multiply item.product.price item.quantity %} Руб</td>
+            <td class="text-right">
+                <a href="{% url 'basket:remove' item.product.id %}" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        <!--<tr>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td></td>-->
+        <!--<td>Цена товаров без скидки</td>-->
+        <!--<td class="text-right">{% if cart %} {{ cart.0.total_old_price }} {% else %} 0 {% endif %} Руб-->
+        <!--</td>-->
+        <!--</tr>-->
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong>Всего</strong></td>
+            <td class="text-right"><strong>{% if cart %} {{ cart.0.total_price }} {% else %} 0 {% endif %}
+                Руб</strong></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
