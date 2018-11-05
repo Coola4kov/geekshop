@@ -1,0 +1,37 @@
+{% extends 'adminapp/admin_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+{{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block mainsite %}
+    <div class="users_list">
+        <button class="new_user btn btn-primary ">
+            <a href="{% url 'admin:categories_create' %}">
+                <i class="fa fa-plus-circle"></i> новая категория </a>
+        </button>
+        {% for object in categories %}
+        <div class="category_record d-flex flex-row {% if not object.is_active %}not_active{% endif %}">
+            <div class="category_name">
+                Название:<br>
+                {{ object.name }}
+            </div>
+            <div class="category_desc">
+                Описание:<br>
+                {{ object.description }}
+            </div>
+            <div class="user_edit">
+                <a class="btn btn-secondary btn-sm" data-toggle="tooltip" title="Редактировать"
+                   href=" {% url 'admin:categories_update' object.pk %}">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-danger btn-sm" data-toggle="tooltip" title="Удалить"
+                   href=" {% url 'admin:categories_delete' object.pk %}">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

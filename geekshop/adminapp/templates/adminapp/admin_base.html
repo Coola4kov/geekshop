@@ -42,29 +42,33 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <!--Light active links-->
-            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'users'%} active {% endif %}"
-               href="{% url 'index' %}">
+            <a class="nav-item nav-link {% if 'users' in request.resolver_match.url_name %} active {% endif %}"
+               href="{% url 'admin:users' %}">
                 Пользователи
             </a>
-            <a class="nav-item nav-link {% if request.resolver_match.namespaces.0 == 'categories'%} active {% endif %}"
-               href="{% url 'basket:main' %}">
+            <a class="nav-item nav-link {% if 'categories' in request.resolver_match.url_name %} active {% endif %}"
+               href="{% url 'admin:categories' %}">
                 Категории
             </a>
-            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'product'%} active {% endif %}"
-               href="#">
+            <a class="nav-item nav-link {% if 'product' in request.resolver_match.url_name %} active {% endif %}"
+               href="{% url 'admin:product' %}">
                 Продукты
+            </a>
+            <a class="nav-item nav-link"
+               href="{% url 'index' %}">
+                Магазин
             </a>
         </div>
 
     </div>
-        <div class="justify-content-end">
-            <a class="btn btn-danger btn-sm ml-3" href="{% url 'admin:logout' %}">
-                <i class="fa fa-sign-out"></i> Выйти
-            </a>
+    <div class="justify-content-end">
+        <a class="btn btn-danger btn-sm ml-3" href="{% url 'admin:logout' %}">
+            <i class="fa fa-sign-out"></i> Выйти
+        </a>
 
     </div>
 </nav>
-<div class="container admin_container" style="margin-top: 5%">
+<div class="container admin_container" style="margin-top: 10%">
 
     {% block mainsite %}
     {% endblock %}

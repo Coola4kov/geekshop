@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect, get_list_or_404
-from django.contrib.auth import authenticate, login, logout
-from adminapp.forms import AdminAuthForm
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.contrib.auth import authenticate, login, logout, decorators
+from adminapp.forms import AdminAuthForm, ShopUserCreationForm, ShopAdminEditForm, CategoryForm
 from authapp.models import ShopUser
+from mainapp.models import ProductCategory, Catalogue
 
 
 def auth(request):
@@ -25,12 +26,15 @@ def auth(request):
     }
     return render(request, 'adminapp/auth.html', context)
 
+
 def admin_logout(request):
     logout(request)
     return redirect('admin:auth')
 
+
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
 def users(request):
-    users_list = ShopUser.objects.all().order_by('-is_active','-is_superuser', '-is_staff', 'username')
+    users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser', '-is_staff', 'username')
     context = {
         'title': "пользователи",
         'users': users_list
@@ -38,32 +42,109 @@ def users(request):
     return render(request, 'adminapp/users.html', context)
 
 
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
 def users_create(request):
-    pass
+    redirect_link = 'admin:users'
+    if request.method == 'POST':
+        edit_form = ShopUserCreationForm(request.POST, request.FILES)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect(redirect_link)
+    else:
+        edit_form = ShopUserCreationForm()
+    context = {
+        'title': 'создание пользователя',
+        'edit_form': edit_form,
+        'action': 'Создать',
+        'link': redirect_link
+    }
+    return render(request, 'adminapp/base_form.html', context)
 
 
-def users_update(request):
-    pass
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def users_update(request, user_id):
+    redirect_link = 'admin:users'
+    current_user = get_object_or_404(ShopUser, id=user_id)
+    if request.method == 'POST':
+        edit_form = ShopAdminEditForm(request.POST, request.FILES, instance=current_user)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('admin:users_update', current_user.pk)
+    else:
+        edit_form = ShopAdminEditForm(instance=current_user)
+    context = {
+        'title': 'создание пользователя',
+        'edit_form': edit_form,
+        'action': 'Обновить',
+        'link': redirect_link
+    }
+    return render(request, 'adminapp/base_form.html', context)
 
 
-def users_delete(request):
-    pass
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def users_delete(request, user_id):
+    current_user = get_object_or_404(ShopUser, id=user_id)
+    current_user.is_active = False
+    current_user.save()
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
 def categories(request):
-    pass
+    current_categories = ProductCategory.objects.all()
+    context = {
+        'title': "пользователи",
+        'categories': current_categories
+    }
+    return render(request, 'adminapp/categories.html', context)
 
 
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
 def categories_create(request):
-    pass
+    redirect_link = 'admin:categories'
+    if request.method == 'POST':
+        edit_form = CategoryForm(request.POST, request.FILES)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect(redirect_link)
+    else:
+        edit_form = CategoryForm()
+    context = {
+        'title': 'создание категории',
+        'edit_form': edit_form,
+        'action': 'Создать',
+        'link': redirect_link
+    }
+
+    return render(request, 'adminapp/base_form.html', context)
 
 
-def categories_update(request):
-    pass
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def categories_delete(request, category_id):
+    current_cat = get_object_or_404(ProductCategory, pk=category_id)
+    current_cat.is_active = False
+    current_cat.save()
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
-def categories_delete(request):
-    pass
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def categories_update(request, category_id):
+    redirect_link = 'admin:categories'
+    current_user = get_object_or_404(ProductCategory, pk=category_id)
+    if request.method == 'POST':
+        edit_form = CategoryForm(request.POST, request.FILES, instance=current_user)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('admin:categories_update', current_user.pk)
+    else:
+        edit_form = CategoryForm(instance=current_user)
+    context = {
+        'title': 'изменение категории',
+        'edit_form': edit_form,
+        'action': 'Обновить',
+        'link': redirect_link
+    }
+    return render(request, 'adminapp/base_form.html', context)
 
 
 def product(request):

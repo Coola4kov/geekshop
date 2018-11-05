@@ -38,6 +38,10 @@
                href="{% url 'basket:main' %}">Корзина</a>
             <a class="nav-item nav-link {% if request.resolver_match.url_name == 'contacts'%} active {% endif %}"
                href="#">Контакты</a>
+            {% if user.is_superuser %}
+            <a class="nav-item nav-link"
+               href="{% url 'admin:users' %}">Админка</a>
+            {% endif %}
         </div>
     </div>
     <form class="form-inline my-2 my-lg-0">
@@ -55,13 +59,13 @@
             <span class="badge badge-light">{% if cart %} {{ cart.0.total_quantity }} {% else %} 0 {% endif %}</span>
         </a>
         {% if user.is_authenticated %}
-            <a class="btn btn-danger btn-sm ml-3" href="{% url 'auth:logout' %}">
-                <i class="fa fa-sign-out"></i> Выйти
-            </a>
+        <a class="btn btn-danger btn-sm ml-3" href="{% url 'auth:logout' %}">
+            <i class="fa fa-sign-out"></i> Выйти
+        </a>
         {% else %}
-            <a class="btn btn-success btn-sm ml-3" href="{% url 'auth:auth' %}">
-                <i class="fa fa-sign-in"></i> Войти
-            </a>
+        <a class="btn btn-success btn-sm ml-3" href="{% url 'auth:auth' %}">
+            <i class="fa fa-sign-in"></i> Войти
+        </a>
         {% endif %}
 
     </form>

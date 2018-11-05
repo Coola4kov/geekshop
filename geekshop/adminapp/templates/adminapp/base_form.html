@@ -1,0 +1,18 @@
+{% extends 'adminapp/admin_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+{{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block mainsite %}
+{{ request.resolver_match }}
+    <div class="authentication_form col-lg-5 bg-dark">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ edit_form.as_p }}
+            <button type="submit" class="btn btn-primary">{{ action }}</button>
+            <a class="btn btn-primary" href="{% url link %}" role="button">Назад</a>
+        </form>
+    </div>
+{% endblock %}
