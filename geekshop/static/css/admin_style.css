@@ -867,3 +867,62 @@ body {
     /*opacity: 0.5;*/
     background: #e9a7a7;
 }
+
+.product_record {
+    height: 125px;
+    margin: 15px auto;
+    position: relative;
+}
+
+.product_record.not_active {
+    /*opacity: 0.5;*/
+    background: #e9a7a7;
+}
+
+.product_record img {
+    display: block;
+    float: left;
+    height: 125px;
+    border-radius: 25px;
+}
+
+.product_record .product_name {
+    display: block;
+    float: left;
+    margin-top: 40px;
+    margin-left: 25px;
+    width: 175px;
+}
+
+.product_record .product_shortd {
+    display: block;
+    float: left;
+    margin-top: 40px;
+    margin-left: 25px;
+    width: 175px;
+}
+
+.product_record .product_price {
+    display: block;
+    float: left;
+    margin-top: 40px;
+    margin-left: 25px;
+    width: 100px;
+}
+
+
+.product_record .product_left {
+    display: block;
+    float: left;
+    margin-top: 40px;
+    margin-left: 25px;
+    width: 50px;
+}
+
+.product_record .user_edit {
+    display: block;
+    float: left;
+    margin-top: 40px;
+    margin-left: 25px;
+    width: 100px;
+}

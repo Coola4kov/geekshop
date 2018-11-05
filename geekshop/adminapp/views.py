@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth import authenticate, login, logout, decorators
-from adminapp.forms import AdminAuthForm, ShopUserCreationForm, ShopAdminEditForm, CategoryForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from adminapp.forms import AdminAuthForm, ShopUserCreationForm, ShopAdminEditForm, CategoryForm, ProductForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Catalogue
 
@@ -42,7 +44,7 @@ def users(request):
     return render(request, 'adminapp/users.html', context)
 
 
-@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+@decorators.user_passes_test(lambda u: u.is_superuser, login_url='admin:auth')
 def users_create(request):
     redirect_link = 'admin:users'
     if request.method == 'POST':
@@ -61,7 +63,7 @@ def users_create(request):
     return render(request, 'adminapp/base_form.html', context)
 
 
-@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+@decorators.user_passes_test(lambda u: u.is_superuser, login_url='admin:auth')
 def users_update(request, user_id):
     redirect_link = 'admin:users'
     current_user = get_object_or_404(ShopUser, id=user_id)
@@ -81,7 +83,7 @@ def users_update(request, user_id):
     return render(request, 'adminapp/base_form.html', context)
 
 
-@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+@decorators.user_passes_test(lambda u: u.is_superuser, login_url='admin:auth')
 def users_delete(request, user_id):
     current_user = get_object_or_404(ShopUser, id=user_id)
     current_user.is_active = False
@@ -147,17 +149,77 @@ def categories_update(request, category_id):
     return render(request, 'adminapp/base_form.html', context)
 
 
-def product(request):
-    pass
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def products(request):
+    products = Catalogue.objects.all().order_by('-is_active')
+    paginator = Paginator(products, 3)
+    page = request.GET.get('page')
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
+    context = {
+        'title': "продукты",
+        'products': products_paginator
+    }
+    return render(request, 'adminapp/products.html', context)
 
 
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
 def product_create(request):
+    redirect_link = 'admin:products'
+    if request.method == 'POST':
+        edit_form = ProductForm(request.POST, request.FILES)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect(redirect_link)
+    else:
+        edit_form = ProductForm()
+    context = {
+        'title': 'создание товара',
+        'edit_form': edit_form,
+        'action': 'Создать',
+        'link': redirect_link
+    }
+
+    return render(request, 'adminapp/base_form.html', context)
+
+
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def product_cat(request, category_id):
     pass
 
 
-def product_update(request):
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def product_create_cat(request, category_id):
     pass
 
 
-def product_delete(request):
-    pass
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def product_update(request, product_id):
+    redirect_link = 'admin:products'
+    current_product = get_object_or_404(Catalogue, pk=product_id)
+    if request.method == 'POST':
+        edit_form = ProductForm(request.POST, request.FILES, instance=current_product)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('admin:product_update', current_product.pk)
+    else:
+        edit_form = ProductForm(instance=current_product)
+    context = {
+        'title': 'изменение товара',
+        'edit_form': edit_form,
+        'action': 'Обновить',
+        'link': redirect_link
+    }
+    return render(request, 'adminapp/base_form.html', context)
+
+
+@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+def product_delete(request, product_id):
+    current_product = get_object_or_404(Catalogue, id=product_id)
+    current_product.is_active = False
+    current_product.save()
+    return redirect(request.META.get('HTTP_REFERER'))

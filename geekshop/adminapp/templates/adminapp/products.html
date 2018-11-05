@@ -1,0 +1,93 @@
+{% extends 'adminapp/admin_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+{{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block mainsite %}
+<div class="users_list">
+    <button class="new_category btn btn-primary ">
+        <a href="{% url 'admin:product_create' %}">
+            <i class="fa fa-plus-circle"></i> новый товар</a>
+    </button>
+    {% for object in products %}
+    <div class="product_record {% if not object.is_active %}not_active{% endif %}">
+        <img src="/media/{{ object.image|default:'products_images/default-image.png'}}"
+             alt="{{ object.name }}">
+        <div class="product_name">
+            Категория: {{object.category.name}}
+            <p>
+                <strong>{{ object.name }}</strong>
+            </p>
+        </div>
+        <div class="product_shortd">
+            desc:<br>
+            {{ object.short_desc }}
+        </div>
+        <div class="product_price">
+            price:<br>
+            {{ object.price }}
+            {% if object.old_price > object.price %}
+            <br>old_price:<br>
+            {{ object.old_price }}
+            {% endif %}
+        </div>
+        <div class="product_left">
+            total:<br>
+            {{ object.storage }}
+        </div>
+        <div class="user_edit">
+            <a class="btn btn-secondary btn-sm" data-toggle="tooltip" title="Редактировать"
+               href=" {% url 'admin:product_update' object.pk %}">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-danger btn-sm" data-toggle="tooltip" title="Удалить"
+               href=" {% url 'admin:product_delete' object.pk %}">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% if products.has_other_pages %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item {% if not products.has_previous %} disabled {% endif %}">
+            {% if products.has_previous %}
+            <a class="page-link " href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+            {% else %}
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            {% endif %}
+        </li>
+        {% for i in products.paginator.page_range %}
+        {% if products.number == i %}
+        <li class="page-item active"><a class="page-link" href="?page={{ i }}">
+            {{ i }} <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        <li class="page-item {% if not products.has_next %} disabled {% endif %}">
+            {% if products.has_next %}
+            <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+            {% else %}
+                <span class="page-link" aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
