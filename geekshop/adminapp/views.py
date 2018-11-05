@@ -37,9 +37,17 @@ def admin_logout(request):
 @decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
 def users(request):
     users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser', '-is_staff', 'username')
+    paginator = Paginator(users_list, 3)
+    page = request.GET.get('page')
+    try:
+        users_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        users_paginator = paginator.page(1)
+    except EmptyPage:
+        users_paginator = paginator.page(paginator.num_pages)
     context = {
         'title': "пользователи",
-        'users': users_list
+        'users': users_paginator
     }
     return render(request, 'adminapp/users.html', context)
 
@@ -94,9 +102,17 @@ def users_delete(request, user_id):
 @decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
 def categories(request):
     current_categories = ProductCategory.objects.all()
+    paginator = Paginator(current_categories, 3)
+    page = request.GET.get('page')
+    try:
+        cat_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        cat_paginator = paginator.page(1)
+    except EmptyPage:
+        cat_paginator = paginator.page(paginator.num_pages)
     context = {
         'title': "пользователи",
-        'categories': current_categories
+        'categories': cat_paginator
     }
     return render(request, 'adminapp/categories.html', context)
 
