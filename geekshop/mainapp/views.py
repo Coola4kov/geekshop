@@ -2,7 +2,6 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import ProductCategory, Catalogue
 
-
 from basketapp.views import Basket
 
 import random

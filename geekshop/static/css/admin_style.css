@@ -811,6 +811,10 @@ body {
     flex-direction: column;
 }
 
+.authentication_form span.helptext{
+    display: none
+}
+
 .authentication_form label {
     color: white;
     margin-bottom: .3rem;

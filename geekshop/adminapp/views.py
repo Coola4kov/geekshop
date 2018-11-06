@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth import authenticate, login, logout, decorators
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic.list import ListView
+from django.utils.decorators import method_decorator
 
 from adminapp.forms import AdminAuthForm, ShopUserCreationForm, ShopAdminEditForm, CategoryForm, ProductForm
 from authapp.models import ShopUser
@@ -34,41 +38,80 @@ def admin_logout(request):
     return redirect('admin:auth')
 
 
-@decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
-def users(request):
-    users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser', '-is_staff', 'username')
-    paginator = Paginator(users_list, 3)
-    page = request.GET.get('page')
-    try:
-        users_paginator = paginator.page(page)
-    except PageNotAnInteger:
-        users_paginator = paginator.page(1)
-    except EmptyPage:
-        users_paginator = paginator.page(paginator.num_pages)
-    context = {
-        'title': "пользователи",
-        'users': users_paginator
-    }
-    return render(request, 'adminapp/users.html', context)
-
-
-@decorators.user_passes_test(lambda u: u.is_superuser, login_url='admin:auth')
-def users_create(request):
+class UsersListView(ListView):
+    model = ShopUser
+    template_name = 'adminapp/users.html'
     redirect_link = 'admin:users'
-    if request.method == 'POST':
-        edit_form = ShopUserCreationForm(request.POST, request.FILES)
-        if edit_form.is_valid():
-            edit_form.save()
-            return redirect(redirect_link)
-    else:
-        edit_form = ShopUserCreationForm()
-    context = {
-        'title': 'создание пользователя',
-        'edit_form': edit_form,
-        'action': 'Создать',
-        'link': redirect_link
-    }
-    return render(request, 'adminapp/base_form.html', context)
+    paginate_by = 3
+
+    @method_decorator(decorators.user_passes_test(lambda u: u.is_superuser, login_url='admin:auth'))
+    def dispatch(self, *args, **kwargs):
+        return super(UsersListView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UsersListView, self).get_context_data(**kwargs)
+        context['title'] = 'пользователи'
+
+        return context
+
+
+class UsersCreateView(CreateView):
+    model = ShopUser
+    template_name = 'adminapp/base_form.html'
+    success_url = reverse_lazy('admin:users')
+    fields = ('username', 'password', 'email', 'profile_pic', 'age', 'is_superuser')
+    redirect_link = 'admin:users'
+
+    @method_decorator(decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth'))
+    def dispatch(self, *args, **kwargs):
+        return super(UsersCreateView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UsersCreateView, self).get_context_data(**kwargs)
+        context.update({
+            'title': 'создание пользователя',
+            'action': 'Создать',
+            'link': self.redirect_link
+        })
+        return context
+
+
+#
+# @decorators.user_passes_test(lambda u: u.is_staff, login_url='admin:auth')
+# def users(request):
+#     users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser', '-is_staff', 'username')
+#     paginator = Paginator(users_list, 3)
+#     page = request.GET.get('page')
+#     try:
+#         users_paginator = paginator.page(page)
+#     except PageNotAnInteger:
+#         users_paginator = paginator.page(1)
+#     except EmptyPage:
+#         users_paginator = paginator.page(paginator.num_pages)
+#     context = {
+#         'title': "пользователи",
+#         'users': users_paginator
+#     }
+#     return render(request, 'adminapp/users.html', context)
+#
+#
+# @decorators.user_passes_test(lambda u: u.is_superuser, login_url='admin:auth')
+# def users_create(request):
+#     redirect_link = 'admin:users'
+#     if request.method == 'POST':
+#         edit_form = ShopUserCreationForm(request.POST, request.FILES)
+#         if edit_form.is_valid():
+#             edit_form.save()
+#             return redirect(redirect_link)
+#     else:
+#         edit_form = ShopUserCreationForm()
+#     context = {
+#         'title': 'создание пользователя',
+#         'edit_form': edit_form,
+#         'action': 'Создать',
+#         'link': redirect_link
+#     }
+#     return render(request, 'adminapp/base_form.html', context)
 
 
 @decorators.user_passes_test(lambda u: u.is_superuser, login_url='admin:auth')
@@ -84,7 +127,7 @@ def users_update(request, user_id):
         edit_form = ShopAdminEditForm(instance=current_user)
     context = {
         'title': 'создание пользователя',
-        'edit_form': edit_form,
+        'form': edit_form,
         'action': 'Обновить',
         'link': redirect_link
     }
@@ -129,7 +172,7 @@ def categories_create(request):
         edit_form = CategoryForm()
     context = {
         'title': 'создание категории',
-        'edit_form': edit_form,
+        'form': edit_form,
         'action': 'Создать',
         'link': redirect_link
     }
@@ -158,7 +201,7 @@ def categories_update(request, category_id):
         edit_form = CategoryForm(instance=current_user)
     context = {
         'title': 'изменение категории',
-        'edit_form': edit_form,
+        'form': edit_form,
         'action': 'Обновить',
         'link': redirect_link
     }
@@ -195,7 +238,7 @@ def product_create(request):
         edit_form = ProductForm()
     context = {
         'title': 'создание товара',
-        'edit_form': edit_form,
+        'form': edit_form,
         'action': 'Создать',
         'link': redirect_link
     }
@@ -226,7 +269,7 @@ def product_update(request, product_id):
         edit_form = ProductForm(instance=current_product)
     context = {
         'title': 'изменение товара',
-        'edit_form': edit_form,
+        'form': edit_form,
         'action': 'Обновить',
         'link': redirect_link
     }
