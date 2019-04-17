@@ -1,0 +1,21 @@
+{% extends 'authapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block userform %}
+
+    <div class="authentication_form col-lg-5 bg-dark">
+        {% if user %}
+            <h4>Пользователь {{ user.username }} подтвержден.</h4>
+        {% else %}
+            <h3>Верификация не пройдена.</h3>
+        {% endif %}
+        <br>
+        <a class="btn btn-primary" href="{% url 'index' %}" role="button">На главную</a>
+
+    </div>
+
+{% endblock %}

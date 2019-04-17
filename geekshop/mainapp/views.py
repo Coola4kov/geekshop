@@ -12,19 +12,11 @@ common_data = {
 }
 
 
-def get_cart(request):
-    cart = []
-    if request.user.is_authenticated:
-        cart = Basket.objects.filter(user=request.user)
-    common_data.update({'cart': cart})
-    return common_data
-
-
 def index(request):
     context = {
         'title': 'магазин',
     }
-    context.update(get_cart(request))
+    context.update(common_data)
     return render(request, 'mainapp/index.html', context)
 
 
@@ -48,7 +40,8 @@ def catalogue(request):
         "catalogue": prod_paginator,
         "new": new,
     }
-    context.update(get_cart(request))
+    # context.update(get_cart(request))
+    context.update(common_data)
     return render(request, 'mainapp/catalogue.html', context)
 
 
@@ -82,7 +75,7 @@ def product_detail(request, product_id=None):
         'title': 'каталог',
         'product': product_object
     }
-    context.update(get_cart(request))
+    context.update(common_data)
     return render(request, 'mainapp/product.html', context)
 
 

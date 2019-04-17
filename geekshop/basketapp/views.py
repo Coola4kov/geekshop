@@ -12,20 +12,12 @@ common_data = {
 }
 
 
-def get_cart(request):
-    cart = []
-    if request.user.is_authenticated:
-        cart = Basket.objects.filter(user=request.user)
-    common_data.update({'cart': cart})
-    return common_data
-
-
 @login_required
 def basket(request):
     context = {
         'title': 'корзина'
     }
-    context.update(get_cart(request))
+    context.update(common_data)
     return render(request, 'basketapp/basket.html', context)
 
 
@@ -81,19 +73,3 @@ def basket_add_ajax(request, product_id, value):
         }
 
         return JsonResponse(data)
-        # print('Получены данные {}{}'.format(product_id, value))
-    # product = get_object_or_404(Catalogue, pk=product_id)
-    # if request.user.is_authenticated:
-    #     current_item = Basket.objects.filter(user=request.user, product=product)
-    #     if not remove:
-    #         if current_item:
-    #             current_item[0].quantity += 1
-    #             current_item[0].save()
-    #         else:
-    #             new_item = Basket(user=request.user, product=product)
-    #             new_item.quantity = 1
-    #             new_item.save()
-    #     else:
-    #         current_item.delete()
-    #
-    # return redirect(request.META.get('HTTP_REFERER'))

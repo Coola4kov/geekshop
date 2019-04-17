@@ -2,7 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 # from django.contrib.auth.models import
 from authapp.models import ShopUser
 from django import forms
-
+import random, hashlib
 
 class ShopUserAuthForm(AuthenticationForm):
     class Meta:
@@ -13,7 +13,6 @@ class ShopUserAuthForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-
 
 class ShopUserCreationForm(UserCreationForm):
     class Meta:
@@ -39,3 +38,14 @@ class ShopUserCreationForm(UserCreationForm):
             raise forms.ValidationError("Вы слишком молоды!")
 
         return data
+
+    def save(self):
+        user = super(ShopUserCreationForm, self).save()
+
+        user.is_active = False
+        salt = hashlib.sha1(str(random.random()).encode('utf8')).hexdigest()[:6]
+        user.activation_key = hashlib.sha1((user.email + salt).encode('utf8')).hexdigest()
+        user.save()
+
+        return user
+
