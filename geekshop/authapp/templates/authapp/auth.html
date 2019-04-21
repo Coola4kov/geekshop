@@ -2,24 +2,31 @@
 {% load staticfiles %}
 
 {% block title %}
-{{ block.super }} | {{ title|title }}
+    {{ block.super }} | {{ title|title }}
 {% endblock %}
 
 {% block userform %}
 
-<div class="authentication_form col-md-3 bg-dark ">
-    <form method="post">
-        {% csrf_token %}
-        {% if next %}
-            <input type="hidden" name="next" value="{{ next }}">
-        {% endif %}
+    <div class="authentication_form col-md-3 bg-dark ">
 
-        {{ auth_form.as_p }}
-        <button type="submit" class="btn btn-primary">Авторизоваться</button>
-        <a class="btn btn-primary" href="{% url 'index' %}" role="button">Отмена</a>
-    </form>
-    <br>
-    <a class="btn btn-primary" href="{% url 'auth:reg' %}" role="button">Зарегистрироваться</a>
-</div>
+        <a class="fb-ic" href="{% url 'social:begin' 'vk-oauth2' %}?next=/">
+            <i class="fa fa-vk fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+        </a>
+        <a class="fb-ic" href="{% url 'social:begin' 'google-oauth2' %}?next=/">
+            <i class="fa fa-google fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+        </a>
+        <form method="post">
+            {% csrf_token %}
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+
+            {{ auth_form.as_p }}
+            <button type="submit" class="btn btn-primary">Авторизоваться</button>
+            <a class="btn btn-primary" href="{% url 'index' %}" role="button">Отмена</a>
+        </form>
+        <br>
+        <a class="btn btn-primary" href="{% url 'auth:reg' %}" role="button">Зарегистрироваться</a>
+    </div>
 
 {% endblock %}

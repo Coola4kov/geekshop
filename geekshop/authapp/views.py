@@ -3,9 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
+from django.db import transaction
+
 
 from authapp.models import ShopUser
-from authapp.forms import ShopUserAuthForm, ShopUserCreationForm
+from authapp.forms import ShopUserAuthForm, ShopUserCreationForm, ShopUserProfileEditForm, ShopUserEditForm
 
 
 def auth(request):
@@ -16,7 +18,7 @@ def auth(request):
         pswd = request.POST['password']
         user = authenticate(username=username, password=pswd)
         if user is not None and user.is_active:
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             if 'next' in request.POST.keys():
                 return redirect(request.POST['next'])
             else:
@@ -80,3 +82,30 @@ def verify(request, email, activation_key):
     except Exception as e:
         print(f'error activation user : {e.args}')
         return redirect('index')
+
+
+@transaction.atomic
+def edit(request):
+    title = 'редактирование'
+
+    if request.method == 'POST':
+        edit_form = ShopUserEditForm(request.POST, request.FILES, \
+                                     instance=request.user)
+        profile_form = ShopUserProfileEditForm(request.POST, \
+                                               instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and profile_form.is_valid():
+            edit_form.save()
+            return redirect('auth:edit')
+    else:
+        edit_form = ShopUserEditForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(
+            instance=request.user.shopuserprofile
+        )
+
+    content = {
+        'title': title,
+        'edit_form': edit_form,
+        'profile_form': profile_form
+    }
+
+    return render(request, 'authapp/update.html', content)

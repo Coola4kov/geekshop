@@ -65,7 +65,6 @@ def basket_add_ajax(request, product_id, value):
         context = {
             'cart': basket_items
         }
-        # context.update(get_cart(request))
         result = render_to_string('basketapp/include/basket_list.html', context)
         print(result)
         data = {

@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <!--Light active links-->
-            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'index'%} active {% endif %}"
+            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %} active {% endif %}"
                href="{% url 'index' %}">
                 Главная
             </a>
@@ -25,22 +25,24 @@
                         {% if request.resolver_match.url_name == 'catalogue' %} active {% endif %}"
                        href="{% url 'catalogue:catalogue' %}">Все категории</a>
                     {% for item in category %}
-                    <!--Light active link of dropdown menu-->
-                    <a class="dropdown-item
+                        <!--Light active link of dropdown menu-->
+                        <a class="dropdown-item
                         {% if request.resolver_match.kwargs.category_id == item.id %} active
                         {% elif product.category_id == item.id %} active
                         {% endif %}"
-                       href="{% url 'catalogue:catalogue_detail' item.id %}">{{ item.name }}</a>
+                           href="{% url 'catalogue:catalogue_detail' item.id %}">{{ item.name }}</a>
                     {% endfor %}
                 </div>
             </li>
-            <a class="nav-item nav-link {% if request.resolver_match.namespaces.0 == 'basket'%} active {% endif %}"
+            <a class="nav-item nav-link {% if request.resolver_match.namespaces.0 == 'basket' %} active {% endif %}"
                href="{% url 'basket:main' %}">Корзина</a>
-            <a class="nav-item nav-link {% if request.resolver_match.url_name == 'contacts'%} active {% endif %}"
-               href="#">Контакты</a>
+            {% if user.is_authenticated %}
+                <a class="nav-item nav-link"
+                   href="{% url 'auth:edit' %}">Профиль</a>
+            {% endif %}
             {% if user.is_superuser %}
-            <a class="nav-item nav-link"
-               href="{% url 'admin:users' %}">Админка</a>
+                <a class="nav-item nav-link"
+                   href="{% url 'admin:users' %}">Админка</a>
             {% endif %}
         </div>
     </div>
@@ -59,13 +61,13 @@
             <span class="badge badge-light">{% if cart %} {{ cart.0.total_quantity }} {% else %} 0 {% endif %}</span>
         </a>
         {% if user.is_authenticated %}
-        <a class="btn btn-danger btn-sm ml-3" href="{% url 'auth:logout' %}">
-            <i class="fa fa-sign-out"></i> Выйти
-        </a>
+            <a class="btn btn-danger btn-sm ml-3" href="{% url 'auth:logout' %}">
+                <i class="fa fa-sign-out"></i> Выйти
+            </a>
         {% else %}
-        <a class="btn btn-success btn-sm ml-3" href="{% url 'auth:auth' %}">
-            <i class="fa fa-sign-in"></i> Войти
-        </a>
+            <a class="btn btn-success btn-sm ml-3" href="{% url 'auth:auth' %}">
+                <i class="fa fa-sign-in"></i> Войти
+            </a>
         {% endif %}
 
     </form>
