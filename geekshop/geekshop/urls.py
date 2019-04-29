@@ -19,7 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 
-
 import mainapp.views as mainapp
 
 urlpatterns = [
@@ -29,9 +28,10 @@ urlpatterns = [
     path('auth/', include('authapp.urls', namespace='auth')),
     path('basket/', include('basketapp.urls', namespace='basket')),
     path('catalogue/', include('mainapp.urls', namespace='catalogue')),
+    path('order/', include('ordersapp.urls', namespace='order')),
     path('', include('social_django.urls', namespace='social')),
-    path('auth/verify/google/oauth2/', include('social_django.urls', namespace='social')),]
+    path('auth/verify/google/oauth2/', include('social_django.urls', namespace='social')),
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

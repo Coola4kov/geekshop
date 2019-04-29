@@ -1,0 +1,48 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}
+{{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static 'js/orders_scripts.js' %}"></script>
+{% endblock %}
+
+{% block mainsite %}
+   {% include 'ordersapp/include/inc_order_summary.html' %}
+   <div class="basket_list">
+       {% for item in object.orderitems.select_related %}
+           <div class="basket_record">
+               <img src="{{ item.product.image }}"
+                    alt="{{ item.product.short_desc }}">
+               <span class="category_name">
+                   {{ item.product.category.name }}
+               </span>
+               <span class="product_name">{{ item.product.name }}</span>
+               <span class="product_price">
+                   {{ item.product.price }}&nbspруб
+               </span>
+               <span class="product_quantitiy">
+                   x {{ item.quantity }} шт.
+               </span>
+               <span class="product_cost">
+                    = {{ item.get_product_cost }}&nbspруб
+               </span>
+           </div>
+       {% endfor %}
+   </div>
+   {% include 'ordersapp/include/inc_order_actions.html' %}
+
+{% endblock %}

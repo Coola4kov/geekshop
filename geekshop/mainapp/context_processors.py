@@ -1,18 +1,11 @@
 from basketapp.models import Basket
-#
-# def basket(request):
-#    print(f'context processor basket works')
-#    basket = []
-#
-#    if request.user.is_authenticated:
-#        basket = Basket.objects.filter(user=request.user)
-#
-#    return {
-#        'basket': basket,
-#    }
+from mainapp.models import ProductCategory, Catalogue
 
 def get_cart(request):
     cart = []
     if request.user.is_authenticated:
         cart = Basket.objects.filter(user=request.user)
-    return {'cart': cart}
+    category = ProductCategory.objects.filter(id__in=Catalogue.objects.values('category').distinct())
+    return {'cart': cart,
+            'category': category}
+

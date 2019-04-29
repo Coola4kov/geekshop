@@ -3,33 +3,35 @@
 
 
 {% block title %}
-{{ block.super }} | {{ title|title }}
+    {{ block.super }} | {{ title|title }}
 {% endblock %}
 
 {% block mainsite %}
-{% include 'mainapp/include/inc__navigation_menu.html/'%}
-<br>
-<br>
-<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">Ваша Корзина</h1>
-    </div>
-</section>
+    {% include 'mainapp/include/inc__navigation_menu.html/' %}
+    <br>
+    <br>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Ваша Корзина</h1>
+        </div>
+    </section>
 
-<div class="container mb-4">
-    <div class="row">
-        <div class="col-12 basket_list">
-        {% include 'basketapp/include/basket_list.html/'%}
-        <div class="col mb-2">
-            <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light">Продолжить покупки</button>
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Оформить покупки</button>
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12 basket_list">
+                {% include 'basketapp/include/basket_list.html/' %}
+                <div class="col mb-2">
+                    <div class="row">
+                        <div class="col-sm-12  col-md-6">
+                            <button class="btn btn-block btn-light">Продолжить покупки</button>
+                        </div>
+                        <div class="col-sm-12 col-md-6 text-right">
+                            <a class="btn btn-lg btn-block btn-success text-uppercase"
+                               href="{% url "order:order_create" %}">Оформить покупки</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

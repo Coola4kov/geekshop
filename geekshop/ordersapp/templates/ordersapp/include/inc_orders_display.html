@@ -1,0 +1,48 @@
+{% load staticfiles %}
+{% load mult %}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Создан</th>
+            <th scope="col" class="text-left">Обновлен</th>
+            <th scope="col" class="text-left">Статус</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in object_list %}
+            {% if item.is_active %}
+                <tr class="basket_rows">
+                    <td>{{ item.pk }}</td>
+                    <td>{{ item.created|date:"Y-m-d H:i:s" }}</td>
+                    <td>{{ item.updated|date:"Y-m-d H:i:s" }}</td>
+                    <td>{{ item.get_status_display }}</td>
+                    <td class="text-right">
+                        <a href="{% url 'order:order_read' item.pk %}" class="btn btn-sm btn-info">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </a>
+                    </td>
+                    <td class="text-right">
+                        <a href="{% url 'order:order_delete' item.pk %}" class="btn btn-sm btn-danger">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    </td>
+
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

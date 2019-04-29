@@ -8,13 +8,14 @@
 {% block userform %}
 
     <div class="authentication_form col-md-3 bg-dark ">
-
-        <a class="fb-ic" href="{% url 'social:begin' 'vk-oauth2' %}?next=/">
-            <i class="fa fa-vk fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-        </a>
-        <a class="fb-ic" href="{% url 'social:begin' 'google-oauth2' %}?next=/">
-            <i class="fa fa-google fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-        </a>
+        <div class="d-flex flex-row">
+            <a class="fb-ic" href="{% url 'social:begin' 'vk-oauth2' %}?next=/">
+                <i class="fa fa-vk fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+            <a class="fb-ic" href="{% url 'social:begin' 'google-oauth2' %}?next=/">
+                <i class="fa fa-google fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+            </a>
+        </div>
         <form method="post">
             {% csrf_token %}
             {% if next %}

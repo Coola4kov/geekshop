@@ -1,0 +1,54 @@
+{% extends 'mainapp/base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}
+{{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static 'js/orders_scripts.js' %}"></script>
+{% endblock %}
+{% block mainsite %}
+
+{% include 'mainapp/include/inc__navigation_menu.html/'%}
+<br>
+<br>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Ваши Заказы, {% if user.first_name %}
+                                                        {{ user.first_name|title }}
+                                                    {% else %}
+                                                        Пользователь
+                                                    {% endif %}
+        </h1>
+    </div>
+</section>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12 basket_list">
+        {% include 'ordersapp/include/inc_orders_display.html/' %}
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <button class="btn btn-block btn-light">Продолжить покупки</button>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <button class="btn btn-lg btn-block btn-success text-uppercase">Оформить покупки</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

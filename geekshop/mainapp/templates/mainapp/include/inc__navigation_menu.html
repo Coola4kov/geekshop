@@ -1,5 +1,6 @@
 {% load staticfiles %}
 
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark nav_padding fixed-top">
     <a class="navbar-brand" href="{% url 'index' %}">
         <img src="{% static 'img/hover_board.png' %}" width="50" height="50" alt="">
@@ -34,12 +35,30 @@
                     {% endfor %}
                 </div>
             </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <!--Light active links inf dropdown menu-->
+                    <a class="nav-link dropdown-toggle
+                        {% if request.resolver_match.url_name == 'orders_list' %}
+                         active {% endif %}"
+                       href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {{ user.first_name }}
+                    </a>
+                    <div class="dropdown-menu"
+                         aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item"
+                           href="{% url 'auth:edit' %}">Профиль</a>
+
+                        <a class="dropdown-item
+                           {% if request.resolver_match.url_name == 'orders_list' %}
+                        active {% endif %}"
+                           href="{% url 'order:orders_list' %}">Заказы</a>
+                    </div>
+                </li>
+            {% endif %}
             <a class="nav-item nav-link {% if request.resolver_match.namespaces.0 == 'basket' %} active {% endif %}"
                href="{% url 'basket:main' %}">Корзина</a>
-            {% if user.is_authenticated %}
-                <a class="nav-item nav-link"
-                   href="{% url 'auth:edit' %}">Профиль</a>
-            {% endif %}
             {% if user.is_superuser %}
                 <a class="nav-item nav-link"
                    href="{% url 'admin:users' %}">Админка</a>
