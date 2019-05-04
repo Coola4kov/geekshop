@@ -31,7 +31,7 @@
                         {% if request.resolver_match.kwargs.category_id == item.id %} active
                         {% elif product.category_id == item.id %} active
                         {% endif %}"
-                           href="{% url 'catalogue:catalogue_detail' item.id %}">{{ item.name }}</a>
+                           href="{% url 'catalogue:catalogue_category' item.id %}">{{ item.name }}</a>
                     {% endfor %}
                 </div>
             </li>

@@ -1,0 +1,21 @@
+{% extends 'authapp/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | {{ title|title }}
+{% endblock %}
+
+{% block userform %}
+
+    <div class="authentication_form col-lg-5 scrollbar bg-dark scrollbar-black bordered-black square thin">
+        <form method="post" enctype="multipart/form-data"
+              class="edit_form  ">
+            {% csrf_token %}
+            {{ edit_form.as_p }}
+            {{ profile_form.as_p }}
+            <button type="submit" class="btn btn-primary">Обновить</button>
+            <a class="btn btn-primary" href="{% url 'index' %}" role="button">На главную</a>
+        </form>
+    </div>
+
+{% endblock %}
