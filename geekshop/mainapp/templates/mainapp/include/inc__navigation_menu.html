@@ -15,7 +15,7 @@
             <li class="nav-item dropdown">
                 <!--Light active links inf dropdown menu-->
                 <a class="nav-link dropdown-toggle
-                    {% if request.resolver_match.url_name == 'catalogue' or request.resolver_match.kwargs.category_id %}
+                    {% if request.resolver_match.url_name == 'catalogue' or request.resolver_match.kwargs.pk %}
                         active {% endif %}"
                    href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
@@ -28,8 +28,8 @@
                     {% for item in category %}
                         <!--Light active link of dropdown menu-->
                         <a class="dropdown-item
-                        {% if request.resolver_match.kwargs.category_id == item.id %} active
-                        {% elif product.category_id == item.id %} active
+                        {% if request.resolver_match.kwargs.pk == item.id %} active
+                        {% elif product.pk == item.id %} active
                         {% endif %}"
                            href="{% url 'catalogue:catalogue_category' item.id %}">{{ item.name }}</a>
                     {% endfor %}

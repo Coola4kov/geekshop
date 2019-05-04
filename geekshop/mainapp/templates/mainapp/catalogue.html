@@ -17,8 +17,11 @@
                                 <img src="/media/{{ item.image }}">
                             </div>
                             <figcaption class="info-wrap">
-                                <h6 class="title text-dots"><a href="#">{{ item.name }}</a> <span
-                                        class="badge badge-primary">New</span></h6>
+                                <h6 class="title text-dots">
+                                    <a href="{% url 'catalogue:catalogue_detail' item.pk %}">{{ item.name }}
+                                    </a>
+                                    <span class="badge badge-primary">New</span>
+                                </h6>
                                 <div class="action-wrap">
                                     <a href="{% url 'basket:add' item.pk %}" class="btn btn-primary btn-sm float-right">
                                         Добавить в корзину </a>
