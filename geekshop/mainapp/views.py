@@ -34,7 +34,10 @@ class CatalogueView(ListView, MultipleObjectMixin):
         return self.kwargs.get('pk')
 
     def get_new_products(self):
-        new_prod = Catalogue.objects.filter(new_product=True, category_id=self.category_id)
+        if self.category_id:
+            new_prod = Catalogue.objects.filter(new_product=True, category_id=self.category_id)
+        else:
+            new_prod = Catalogue.objects.filter(new_product=True)
         if len(new_prod) < 2:
             new = []
         else:

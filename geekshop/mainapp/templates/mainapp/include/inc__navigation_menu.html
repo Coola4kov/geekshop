@@ -15,7 +15,7 @@
             <li class="nav-item dropdown">
                 <!--Light active links inf dropdown menu-->
                 <a class="nav-link dropdown-toggle
-                    {% if request.resolver_match.url_name == 'catalogue' or request.resolver_match.kwargs.pk %}
+                    {% if request.resolver_match.url_name == 'catalogue' or request.resolver_match.kwargs.pk     %}
                         active {% endif %}"
                    href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">

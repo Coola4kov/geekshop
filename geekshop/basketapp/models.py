@@ -29,6 +29,10 @@ class Basket(models.Model):
             temp = self._get_total_price()
         return temp
 
+    @staticmethod
+    def get_item(pk):
+        return Basket.objects.filter(pk=pk).first()
+
     total_quantity = property(_get_total_quantity)
     total_price = property(_get_total_price)
     total_old_price = property(_get_total_old_price)

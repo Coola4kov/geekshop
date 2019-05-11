@@ -59,7 +59,7 @@ def reg(request):
 
 
 def send_verify_mail(user):
-    verify_link = reverse('auth:verify', args=[user.email, user.activation_key])
+    verify_link = reverse('auth:verify', args=[user.email, user.username, user.activation_key])
     title = f'Подтверждение учетной записи {user.username}'
     message = f'Для подтверждения учетной записи {user.username} на портале ' \
         f'{settings.DOMAIN_NAME} перейдите по ссылке: \n' \
@@ -67,14 +67,14 @@ def send_verify_mail(user):
 
     return send_mail(title, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
 
-def verify(request, email, activation_key):
+def verify(request, email, activation_key, username):
     try:
-        user = ShopUser.objects.get(email=email)
+        user = ShopUser.objects.get(email=email, username=username)
         if user.activation_key == activation_key and not user.is_activation_key_expired():
             user.is_active = True
             # user.activation_key_expires = now()
             user.save()
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return render(request, 'authapp/verification.html')
         else:
             print(f'error activation user: {user}')
