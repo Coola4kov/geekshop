@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.conf import settings
+from django.core.cache import cache
+from django.db.models import F
 
 from mainapp.models import ProductCategory, Catalogue
 from .models import Basket
@@ -16,15 +19,27 @@ def basket(request):
     }
     return render(request, 'basketapp/basket.html', context)
 
+def get_product(pk):
+    if settings.LOW_CACHE:
+        key = f'product_{pk}'
+        product = cache.get(key)
+        if product is None:
+            product = get_object_or_404(Catalogue, pk=pk)
+            cache.set(key, product)
+        return product
+    else:
+        return get_object_or_404(Catalogue, pk=pk)
 
 def _basket_change(request, product_id, remove=False, ):
-    product = get_object_or_404(Catalogue, pk=product_id)
+        # product = get_object_or_404(Catalogue, pk=product_id)
+    product = get_product(product_id)
     if request.user.is_authenticated:
-        current_item = Basket.objects.filter(user=request.user, product=product)
+        current_item = Basket.objects.filter(user=request.user, product=product).select_related()
         if not remove:
             if current_item:
-                current_item[0].quantity += 1
-                current_item[0].save()
+                current_item[0].quantity = F('quantity') + 1
+                # current_item[0].quantity += 1
+                # current_item[0].save()
             else:
                 new_item = Basket(user=request.user, product=product)
                 new_item.quantity = 1
@@ -56,7 +71,7 @@ def basket_add_ajax(request, product_id, value):
             basket_item.save()
         else:
             basket_item.delete()
-        basket_items = Basket.objects.filter(user=request.user)
+        basket_items = Basket.objects.filter(user=request.user).select_related()
         print(basket_items)
         context = {
             'cart': basket_items

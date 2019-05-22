@@ -11,6 +11,8 @@ from django.forms import inlineformset_factory
 
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from basketapp.models import Basket
 from ordersapp.models import Order, OrderItem
@@ -22,6 +24,10 @@ class OrderList(ListView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderItemsCreate(CreateView):
@@ -132,6 +138,9 @@ class OrderRead(DetailView):
         context['title'] = 'заказ/просмотр'
         return context
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(DetailView, self).dispatch(*args, **kwargs)
 
 def order_forming_complete(request, pk):
     order = get_object_or_404(Order, pk=pk)
